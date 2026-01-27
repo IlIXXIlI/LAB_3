@@ -2,11 +2,9 @@
 #include <vector>
 #include <string>
 #include <fstream>
-#include <iostream>
 #include <sstream>
 #include <regex>
 
-// std::vector<std::pair<double, double>>
 
 std::sregex_token_iterator splitLine(const std::string& line, const std::string& pat) {
     std::regex pattern(pat);
@@ -34,6 +32,7 @@ std::vector<std::pair<double, double>> parseCvv(const std::string &path) {
     std::string line;
     std::vector<std::pair<double, double>> result; 
     size_t count = 0;
+
     while (std::getline(file, line))
     {
         std::sregex_token_iterator it, end = splitLine(line, ";");
@@ -45,21 +44,18 @@ std::vector<std::pair<double, double>> parseCvv(const std::string &path) {
             
             if (count >= 2) {
                 double value = convertingStringToDouble(token);
+                
                 if (count % 2) {
                     x = value;
                 } else {
                     y = value; 
                     result.push_back({x, y});
                 }
-
             }
             count++;
         }
-       
     }
     return result;
-
-   
 }
 
 
